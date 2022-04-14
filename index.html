@@ -16,13 +16,14 @@
 </head>
 <body>
     <main class="grid container">
+		 <div class="open-busket">Открыть корзину</div>
         <div class="sub_category_page">
             <div class="column_right column_right_products_container">
                 <div class="product__area">
                     
                     
                 <!--TEMPLATE-->
-                    <div id="products_section">
+                    <div id="products_section" data-id="8b051a82-e051-11e4-afe5-00259036a192">
                         <div class="products_page pg_0">
                             <div class="product product_horizontal">                                
                                 <span class="product_code">Код: 147268</span>
@@ -113,17 +114,17 @@
                                 <div class="product__wrapper">
                                     <div class="product_count_wrapper">
                                         <div class="stepper">
-                                            <input class="product__count stepper-input" type="number" value="1">
-                                            <span class="stepper-arrow up"></span>
-                                            <span class="stepper-arrow down"></span>                                            
+                                            <div class="product__count stepper-input" data-counter>1</div>
+                                            <span class="stepper-arrow up" data-action="plus"></span>
+                                            <span class="stepper-arrow down" data-action="minus"></span>                                            
                                         </div>
                                     </div>
-                                    <span class="btn btn_cart" data-url="/cart/" data-product-id="9bf0afd7-5190-11e5-b9a9-00259036a192">
-                                        <svg class="ic ic_cart">
-                                           <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart"></use>
+                                    <button data-cart class="btn btn_cart busket-closeBtn" data-url="/cart/" data-product-id="9bf0afd7-5190-11e5-b9a9-00259036a192">
+                                        <svg data-cart class="ic ic_cart">
+                                           <use data-cart xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#cart"></use>
                                         </svg>
-                                        <span class="ng-binding">В корзину</span>
-                                    </span>
+                                        <span data-cart class="ng-binding">В корзину</span>
+												</button>
                                 </div>
                             </div>
                         </div>
