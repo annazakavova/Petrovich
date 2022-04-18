@@ -51,12 +51,30 @@ window.addEventListener('click', function (event) {
 	if (event.target.dataset.action === 'minus') {
 		counter.innerText = --counter.innerText;
 	}
+});
 
+const cartWrapper = document.querySelector('.product__area');
+
+window.addEventListener('click', function (event) {
+
+	if (event.target.hasAttribute('data-cart')) {
+
+		const card = event.target.closest('#products_section');
+
+		const productInfo = {
+			id: card.dataset.id,
+			title: card.querySelector('.product_description').innerText,
+			price: card.querySelector('.unit--active').innerText,
+			counter: card.querySelector('[data-counter]').innerText,
+		};
+
+		console.log(productInfo);
+	}
 });
 
 //	КОРЗИНА 
 window.addEventListener('DOMContentLoaded', function () {
-	let products = document.querySelectorAll('.product'),
+	let products = document.querySelectorAll('#products_section'),
 		buttons = document.querySelectorAll('.busket-closeBtn'),
 		openBtn = document.querySelector('.open-busket');
 
@@ -79,14 +97,14 @@ window.addEventListener('DOMContentLoaded', function () {
 		cart.appendChild(busketText);
 		cart.appendChild(field);
 		cart.appendChild(closeBtn);
-	
+
 	}
 
 	createCart();
 
 	let field = document.querySelector('.cart-field'),
 		cart = document.querySelector('.cart'),
-		close = document.querySelector('.close');
+		close = document.querySelector('.busket-close');
 
 	function openCart() {
 		cart.style.display = 'block';
@@ -98,21 +116,32 @@ window.addEventListener('DOMContentLoaded', function () {
 	openBtn.addEventListener('click', openCart);
 	close.addEventListener('click', closeCart);
 
+	for (let i = 0; i < buttons.length; i++) {
+		buttons[i].addEventListener('click', function () {
+			let item = products[i].cloneNode(true),
+				productStatus = item.querySelector('.product_status_tooltip_container');
+				listUnit = item.querySelector('.list--unit-desc');
+				productPricePoints = item.querySelector('.product_price_points');
+			
+			
+			
+			productStatus.remove();
+			listUnit.remove();
+			productPricePoints.remove();
+			field.appendChild(item);
+			products[i].remove();
+		});
+	}
 });
 
-window.addEventListener('click', function (event) {
+const button = document.body.querySelector('.busket-closeBtn');
 
-	if (event.target.hasAttribute('data-cart')) {
+button.addEventListener('click', function () {
 
-		const card = event.target.closest('#products_section');
-
-		const productInfo = {
-			id: card.dataset.id,
-			title: card.querySelector('.product_description').innerText,
-			price: card.querySelector('.unit--active').innerText,
-			counter: card.querySelector('[data-counter]').innerText,
-		};
-
-		console.log(productInfo);
+	if (button.innerText.toLowerCase() === 'В корзинe') {
+		button.innerText = 'В корзину';
+	}
+	else {
+		button.innerText = 'В корзинe';
 	}
 });
