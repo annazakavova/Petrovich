@@ -34,6 +34,26 @@ const checkoutTabs = (item, index) => {
 tabItems.forEach(checkoutTabs)
 
 // ----------------------------------------------------------------------------------------------------------------------------------
+// ЭЛЕМЕНТ "КОРЗИНА ПУСТА"
+
+function toggleCartStatus() {
+
+	const cartWrapper = document.querySelector('.cart-wrapper');
+	const cartEmptyBadge = document.querySelector('[data-cart-empty]'); 
+	const orderForm = document.querySelector('#order-form');
+
+	if (cartWrapper.children.length > 0) {
+		console.log('yes');
+		cartEmptyBadge.classList.add('none');
+		orderForm.classList.remove('none');
+	} else {
+		console.log('no');
+		cartEmptyBadge.classList.remove('none');
+		orderForm.classList.add('none');
+	}
+}
+
+// ----------------------------------------------------------------------------------------------------------------------------------
 // СЧЕТЧИК
 window.addEventListener('click', function (event) {
 
@@ -50,9 +70,20 @@ window.addEventListener('click', function (event) {
 
 	}
 	if (event.target.dataset.action === 'minus') {
-		counter.innerText = --counter.innerText;
+
+		if ( parseInt(counter.innerText) > 1 ) {
+			counter.innerText = --counter.innerText;
+
+		} else if (event.target.closest('.cart-wrapper') && parseInt(counter.innerText) === 1 ) {
+
+			console.log('in cart');
+			event.target.closest('.cart-item').remove();
+
+			toggleCartStatus();
+		}
 	}
 });
+
 // ------------------------------------------------------------------------------------------------------------------------------------
 // ДОБАВЛЕНИЕ ТОВАРОВ В КОРЗИНУ
 const cartWrapper = document.querySelector('.cart-wrapper');
@@ -83,9 +114,9 @@ window.addEventListener('click', function (event) {
 			counterElement.innerText = parseInt(counterElement.innerText) + parseInt(productInfo.counter);
 		} else {
 
-			const cartItemHTML = `<div id="${productInfo.id}">
+			const cartItemHTML = `<div class="cart-item">
 												<div class="products_page pg_0">
-													<div class="product product_horizontal">
+													<div class="product product_horizontal" data-id="${productInfo.id}">
 														<span class="product_code">${productInfo.code}</span>
 														<div class="product_photo">
 															<a href="#" class="url--link product__link">
@@ -169,10 +200,31 @@ window.addEventListener('click', function (event) {
 			cartWrapper.insertAdjacentHTML('beforeend', cartItemHTML);
 		
 		}
-	};
+
+		card.querySelector('[data-counter]').innerText = '1';
+
+		
+		toggleCartStatus();
+	}
 });
 
+// ----------------------------------------------------------------------------------------------------------------------------------
+// ИЗМЕНЕНИЕ ЦЕНЫ ПРИ ДОБАВЛЕНИИ ТОВАРОВ
+ function calcCartPrice() {
+	 const cartItems = document.querySelectorAll('.cart-item');
+	 console.log(cartItems);
 
+	 cartItems.forEach(function (item) {
+		 console.log(item);
+
+		 const amountEl = item.querySelector('[data-counter]');
+		 const priceEl = item.querySelector('.goldPrice');
+
+		 const currentPrice = parseInt(amountEl.innerText) * parseInt(priceEl.innerText);
+		 console.log(currentPrice);
+
+	 })
+ } 
 
 // ---------------------------------------------------------------------------------------------------------------------------------
 // 	КОРЗИНА 
